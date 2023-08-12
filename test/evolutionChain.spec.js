@@ -47,4 +47,13 @@ describe('getPokemonEvolutionChainData', () => {
         expect(pokemon1Res).to.deep.equal(pokemon2Res);
         expect(pokemon1Res).to.deep.equal(pokemon3Res);
     });
+
+    it('returns an object with one tier of evolution where Pokemon has no variations', (done) => {
+        chai.request(app).get('/api/evolutionChain/pokemonId/142').end((err, res) => {
+            console.log(res.body)
+            done();
+        });
+
+
+    });
 });
