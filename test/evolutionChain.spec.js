@@ -50,10 +50,9 @@ describe('getPokemonEvolutionChainData', () => {
 
     it('returns an object with one tier of evolution where Pokemon has no variations', (done) => {
         chai.request(app).get('/api/evolutionChain/pokemonId/142').end((err, res) => {
-            console.log(res.body)
+            expect(res.body.name).to.equal('aerodactyl');
+            expect(res.body.variations.length).to.equal(0);
             done();
         });
-
-
     });
 });
