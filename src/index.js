@@ -18,7 +18,7 @@ const formatPokemonEvolutionChain = (pokemonEvolutionChainData) => {
     return formattedPokemonEvolutionChain;
 };
 
-const getPokemonEvolutionChain = async (pokemonId) => {
+const getPokemonEvolutionChainByPokemonId = async (pokemonId) => {
     const pokemonEvolutionChainData = await getPokemonEvolutionChainData(pokemonId);
 
     return formatPokemonEvolutionChain(pokemonEvolutionChainData);
