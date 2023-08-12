@@ -30,9 +30,9 @@ export const getPokemonEvolutionChainByPokemonId = (req, res, next) => {
                 });
             }
 
-            res.status(200).send({
-                pokemonEvolutionChainData: formatPokemonEvolutionChain(pokemonEvolutionChainData)
-            });
+            res.status(200).send(
+                formatPokemonEvolutionChain(pokemonEvolutionChainData)
+            );
         })
         .catch(next);
 };
