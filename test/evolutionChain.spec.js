@@ -55,4 +55,20 @@ describe('getPokemonEvolutionChainData', () => {
             done();
         });
     });
+
+    it('returns an object with multiple variations at the same evolution level', (done) => {
+        chai.request(app).get('/api/evolutionChain/pokemonId/43').end((err, res) => {
+            expect(res.body.name).to.equal('oddish');
+            expect(res.body.variations[0].variations.length).to.equal(2)
+        });
+        chai.request(app).get('/api/evolutionChain/pokemonId/133').end((err, res) => {
+            expect(res.body.name).to.equal('eevee');
+            expect(res.body.variations.length).to.equal(8)
+        });
+        chai.request(app).get('/api/evolutionChain/pokemonId/236').end((err, res) => {
+            expect(res.body.name).to.equal('tyrogue');
+            expect(res.body.variations.length).to.equal(3)
+            done();
+        });
+    });
 });
