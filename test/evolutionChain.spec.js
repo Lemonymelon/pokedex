@@ -1,4 +1,4 @@
-import chai, { assert } from 'chai';
+import chai, { assert, expect } from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import axios from 'axios';
@@ -26,5 +26,25 @@ describe('getPokemonEvolutionChainData', () => {
             assert(Object.keys(res.body).includes('name'));
             done();
         });
+    });
+
+    it('returns the same object when the id of any Pokemon within that evolution tree is passed', (done) => {
+        let pokemon1Res;
+        let pokemon2Res;
+        let pokemon3Res;
+
+        chai.request(app).get('/api/evolutionChain/pokemonId/1').end((err, res) => {
+            pokemon1Res = res.body;
+        });
+        chai.request(app).get('/api/evolutionChain/pokemonId/2').end((err, res) => {
+            pokemon2Res = res.body;
+        });
+        chai.request(app).get('/api/evolutionChain/pokemonId/3').end((err, res) => {
+            pokemon3Res = res.body;
+            done();
+        });
+
+        expect(pokemon1Res).to.deep.equal(pokemon2Res);
+        expect(pokemon1Res).to.deep.equal(pokemon3Res);
     });
 });
