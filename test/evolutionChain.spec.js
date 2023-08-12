@@ -8,7 +8,7 @@ import { mockPokemonSpeciesAndEvolutionData } from './mocks/stub.js';
 
 chai.use(chaiHttp);
 
-describe('formatPokemonEvolutionChain', () => {
+describe('getPokemonEvolutionChainData', () => {
     let axiosGetMock;
 
     before(() => {
@@ -20,16 +20,9 @@ describe('formatPokemonEvolutionChain', () => {
         axiosGetMock.restore();
     });
 
-    it('returns an object', (done) => {
-        chai.request(app).get('/api/evolutionChain/pokemonId/1').end((err, res) => {
-            assert(typeof res.body === 'object');
-            done();
-        });
-    });
-
     it('returns an object with keys of "name" and "variation"', (done) => {
         chai.request(app).get('/api/evolutionChain/pokemonId/1').end((err, res) => {
-            console.log(res.body);
+            assert(typeof res.body === 'object');
             assert(Object.keys(res.body).includes('name'));
             done();
         });

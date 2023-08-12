@@ -7,11 +7,7 @@ export const getPokemonEvolutionChainData = async (pokemonId) => {
 
     const { data: pokemonSpeciesData } = await axios.get(pokemonSpeciesUrl);
 
-
     const { evolution_chain: { url: evolutionChainUrl } } = pokemonSpeciesData;
-
-    console.log(evolutionChainUrl)
-
 
     const { data: pokemonChainData } = await axios.get(evolutionChainUrl);
     const { chain } = pokemonChainData;
