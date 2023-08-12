@@ -1,6 +1,14 @@
 import { getPokemonEvolutionChainData } from "../api.js";
 
 const formatPokemonEvolutionChain = (pokemonEvolutionChainData) => {
+    if (!Object.keys(pokemonEvolutionChainData).includes('evolves_to')) {
+        throw new Error("Invalid object; missing property \"evolves_to\"");
+    }
+
+    if (!Object.keys(pokemonEvolutionChainData).includes('species')) {
+        throw new Error("Invalid object; missing property \"species\"");
+    }
+
     const formattedPokemonEvolutionChain = {};
 
     const { species: { name }, evolves_to } = pokemonEvolutionChainData;
