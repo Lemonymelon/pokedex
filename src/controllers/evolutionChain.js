@@ -21,15 +21,18 @@ const formatPokemonEvolutionChain = (pokemonEvolutionChainData) => {
 export const getPokemonEvolutionChainByPokemonId = (req, res, next) => {
     const { pokemonId } = req.params;
 
-    getPokemonEvolutionChainData(pokemonId).then((pokemonEvolutionChainData) => {
-        if (!pokemonEvolutionChainData) {
-            return Promise.reject({
-                status: 404,
-                message: 'No evolution chain found!'
-            });
-        }
+    getPokemonEvolutionChainData(pokemonId)
+        .then((pokemonEvolutionChainData) => {
+            if (!pokemonEvolutionChainData) {
+                return Promise.reject({
+                    status: 404,
+                    message: 'No evolution chain found!'
+                });
+            }
 
-        res.status(200).send(formatPokemonEvolutionChain(pokemonEvolutionChainData));
-    })
+            res.status(200).send({
+                pokemonEvolutionChainData: formatPokemonEvolutionChain(pokemonEvolutionChainData)
+            });
+        })
         .catch(next);
 };
