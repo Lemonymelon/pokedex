@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import axios from 'axios';
 
 import app from '../src/app.js'
-import { mockPokemonSpeciesAndEvolutionData } from './mocks/stub.js';
+import { mockPokemonSpeciesAndEvolutionData } from './mocks/stubs/evolutionChainStub.js';
 
 chai.use(chaiHttp);
 
@@ -20,10 +20,11 @@ describe('getPokemonEvolutionChainData', () => {
         axiosGetMock.restore();
     });
 
-    it('returns an object with keys of "name" and "variation"', (done) => {
+    it('returns an object with keys of "name" and "variations"', (done) => {
         chai.request(app).get('/api/evolutionChain/pokemonId/1').end((err, res) => {
             assert(typeof res.body === 'object');
             assert(Object.keys(res.body).includes('name'));
+            assert(Object.keys(res.body).includes('variations'));
             done();
         });
     });
@@ -68,15 +69,6 @@ describe('getPokemonEvolutionChainData', () => {
         chai.request(app).get('/api/evolutionChain/pokemonId/236').end((err, res) => {
             expect(res.body.name).to.equal('tyrogue');
             expect(res.body.variations.length).to.equal(3)
-            done();
-        });
-    });
-
-    it('throws an error when the object has no "name" property', (done) => {
-        chai.request(app).get('/api/evolutionChain/pokemonId/0').end((err, res) => {
-            console.log(err);
-            console.log(res.body);
-
             done();
         });
     });

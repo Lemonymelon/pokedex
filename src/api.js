@@ -29,5 +29,5 @@ export const fetchPokemonDisplayDetailsById = async (pokemonId) => {
         }
     } = await axios.get(pokemonUrl);
 
-    return { name, sprite };
+    return { id: pokemonId, name, sprite };
 };

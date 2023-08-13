@@ -1,8 +1,8 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
-const evolutionChainData = require('./mock-data/evolutionChain.json');
-const speciesData = require('./mock-data/species.json');
+const evolutionChainData = require('../mock-data/evolutionChain.json');
+const speciesData = require('../mock-data/species.json');
 
 export const mockPokemonSpeciesAndEvolutionData = (axiosGetMock) => {
 
@@ -42,6 +42,4 @@ export const mockPokemonSpeciesAndEvolutionData = (axiosGetMock) => {
     axiosGetMock.withArgs(pokemonEvolutionChain47DataUrl).resolves({ data: evolutionChainData["47"] });
     axiosGetMock.withArgs(pokemonEvolutionChain67DataUrl).resolves({ data: evolutionChainData["67"] });
     axiosGetMock.withArgs(pokemonEvolutionChain71DataUrl).resolves({ data: evolutionChainData["71"] });
-}
-
-
+};

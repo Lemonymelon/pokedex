@@ -1,20 +1,9 @@
-import { fetchPokemonDisplayDetailsById } from "../api.js";
+import { Router } from "express";
 
-export const getPokemonDisplayDetailsById = (req, res, next) => {
-    const { pokemonId } = req.params;
+import { getPokemonDisplayDetailsById } from "../controllers/pokemonDisplayDetails.js";
 
-    fetchPokemonDisplayDetailsById(pokemonId)
-        .then((pokemonDisplayData) => {
-            if (!pokemonDisplayData) {
-                return Promise.reject({
-                    status: 404,
-                    message: 'No display data found!'
-                });
-            }
+const pokemonRouter = Router();
 
-            res.status(200).send(
-                formatPokemonEvolutionChain(pokemonEvolutionChainData)
-            );
-        })
-        .catch(next);
-};
+pokemonRouter.route('/id/:id').get(getPokemonDisplayDetailsById);
+
+export default pokemonRouter;
