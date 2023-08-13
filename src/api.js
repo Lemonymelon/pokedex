@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const pokemonApiBaseUrl = 'https://pokeapi.co/api/v2';
+export const pokemonApiBaseUrl = 'https://pokeapi.co/api/v2';
 
 export const fetchPokemonEvolutionChainData = async (pokemonId) => {
     const pokemonSpeciesUrl = `${pokemonApiBaseUrl}/pokemon-species/${pokemonId}`;

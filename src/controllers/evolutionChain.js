@@ -1,6 +1,6 @@
 import { fetchPokemonEvolutionChainData } from "../api.js";
 
-const formatPokemonEvolutionChain = (pokemonEvolutionChainData) => {
+export const formatPokemonEvolutionChain = (pokemonEvolutionChainData) => {
     const formattedPokemonEvolutionChain = {};
 
     const { species: { name }, evolves_to } = pokemonEvolutionChainData;

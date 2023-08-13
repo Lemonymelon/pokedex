@@ -2,9 +2,14 @@ import chai, { assert, expect } from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import axios from 'axios';
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 
 import app from '../src/app.js'
-import { mockPokemonSpeciesAndEvolutionData } from './mocks/stubs/evolutionChainStub.js';
+import { mockEvolutionChainData } from './mocks/stubs/evolutionChainStub.js';
+import { mockSpeciesData } from './mocks/stubs/speciesStub.js';
+import { formatPokemonEvolutionChain } from '../src/controllers/evolutionChain.js';
+const evolutionChainData = require('./mocks/mock-data/evolutionChain.json');
 
 chai.use(chaiHttp);
 
@@ -13,7 +18,8 @@ describe('getPokemonEvolutionChainData', () => {
 
     before(() => {
         axiosGetMock = sinon.stub(axios, 'get');
-        mockPokemonSpeciesAndEvolutionData(axiosGetMock);
+        mockEvolutionChainData(axiosGetMock);
+        mockSpeciesData(axiosGetMock);
     });
 
     after(() => {
@@ -73,3 +79,23 @@ describe('getPokemonEvolutionChainData', () => {
         });
     });
 });
+
+describe('formatEvolutionChain', () => {
+    it('correctly formats raw evolution chain data', () => {
+        const formattedChain1 = formatPokemonEvolutionChain(evolutionChainData["1"].chain);
+        expect(formattedChain1.name).to.equal('bulbasaur');
+        expect(formattedChain1.variations[0].name).to.equal('ivysaur');
+        expect(formattedChain1.variations[0].variations[0].name).to.equal('venusaur');
+
+        const formattedChain67 = formatPokemonEvolutionChain(evolutionChainData["67"].chain);
+        expect(formattedChain67.name).to.equal('eevee');
+        expect(formattedChain67.variations[0].name).to.equal('vaporeon');
+        expect(formattedChain67.variations[1].name).to.equal('jolteon');
+        expect(formattedChain67.variations[2].name).to.equal('flareon');
+        expect(formattedChain67.variations[3].name).to.equal('espeon');
+        expect(formattedChain67.variations[4].name).to.equal('umbreon');
+        expect(formattedChain67.variations[5].name).to.equal('leafeon');
+        expect(formattedChain67.variations[6].name).to.equal('glaceon');
+        expect(formattedChain67.variations[7].name).to.equal('sylveon');
+    })
+})
