@@ -17,6 +17,9 @@ export const mockPokemonSpeciesAndEvolutionData = (axiosGetMock) => {
     const pokemonSpecies133DataUrl = `${pokemonSpeciesBaseUrl}/133`;
     const pokemonSpecies142DataUrl = `${pokemonSpeciesBaseUrl}/142`;
     const pokemonSpecies236DataUrl = `${pokemonSpeciesBaseUrl}/236`;
+    const pokemonSpecies0DataUrl = `${pokemonSpeciesBaseUrl}/0`;
+    const pokemonSpecies666DataUrl = `${pokemonSpeciesBaseUrl}/666`;
+
 
     const pokemonEvolutionChain1DataUrl = `${pokemonEvolutionChainBaseUrl}/1/`;
     const pokemonEvolutionChain18DataUrl = `${pokemonEvolutionChainBaseUrl}/18/`;
@@ -31,6 +34,8 @@ export const mockPokemonSpeciesAndEvolutionData = (axiosGetMock) => {
     axiosGetMock.withArgs(pokemonSpecies133DataUrl).resolves({ data: speciesData["133"] });
     axiosGetMock.withArgs(pokemonSpecies142DataUrl).resolves({ data: speciesData["142"] });
     axiosGetMock.withArgs(pokemonSpecies236DataUrl).resolves({ data: speciesData["236"] });
+    axiosGetMock.withArgs(pokemonSpecies0DataUrl).resolves({ data: speciesData["0"] });
+    axiosGetMock.withArgs(pokemonSpecies666DataUrl).resolves({ data: speciesData["666"] });
 
     axiosGetMock.withArgs(pokemonEvolutionChain1DataUrl).resolves({ data: evolutionChainData["1"] });
     axiosGetMock.withArgs(pokemonEvolutionChain18DataUrl).resolves({ data: evolutionChainData["18"] });

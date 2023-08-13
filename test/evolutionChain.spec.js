@@ -71,4 +71,13 @@ describe('getPokemonEvolutionChainData', () => {
             done();
         });
     });
+
+    it('throws an error when the object has no "name" property', (done) => {
+        chai.request(app).get('/api/evolutionChain/pokemonId/0').end((err, res) => {
+            console.log(err);
+            console.log(res.body);
+
+            done();
+        });
+    });
 });

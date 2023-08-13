@@ -1,4 +1,4 @@
-import { getPokemonEvolutionChainData } from "../api.js";
+import { fetchPokemonEvolutionChainData } from "../api.js";
 
 const formatPokemonEvolutionChain = (pokemonEvolutionChainData) => {
     if (!Object.keys(pokemonEvolutionChainData).includes('evolves_to')) {
@@ -29,7 +29,7 @@ const formatPokemonEvolutionChain = (pokemonEvolutionChainData) => {
 export const getPokemonEvolutionChainByPokemonId = (req, res, next) => {
     const { pokemonId } = req.params;
 
-    getPokemonEvolutionChainData(pokemonId)
+    fetchPokemonEvolutionChainData(pokemonId)
         .then((pokemonEvolutionChainData) => {
             if (!pokemonEvolutionChainData) {
                 return Promise.reject({
