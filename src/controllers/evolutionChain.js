@@ -14,7 +14,7 @@ export const formatPokemonEvolutionChain = (pokemonEvolutionChainData, includeId
     }
 
     if (evolves_to.length > 0) {
-        formattedPokemonEvolutionChain.variations = evolves_to.map((variation) => formatPokemonEvolutionChain(variation));
+        formattedPokemonEvolutionChain.variations = evolves_to.map((variation) => formatPokemonEvolutionChain(variation, includeId));
     } else {
         formattedPokemonEvolutionChain.variations = evolves_to;
 
