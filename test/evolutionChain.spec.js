@@ -98,4 +98,11 @@ describe('formatEvolutionChain', () => {
         expect(formattedChain67.variations[6].name).to.equal('glaceon');
         expect(formattedChain67.variations[7].name).to.equal('sylveon');
     })
+
+    it('includes pokemon ids when passed "true" as includeId argument', () => {
+        const formattedChain1 = formatPokemonEvolutionChain(evolutionChainData["1"].chain, "true");
+        expect(formattedChain1.id).to.equal('1');
+        expect(formattedChain1.variations[0].id).to.equal('2');
+        expect(formattedChain1.variations[0].variations[0].id).to.equal('3');
+    })
 })
