@@ -13,9 +13,6 @@ or
 npm run dev
 ```
 
-<br>
-<br>
-
 ## API routes and endpoints
 
 Note: the colon notation '/endpoint/:parameter' is a placeholder and should be replaced with the appropriate value e.g. '/pokemon/1'.
