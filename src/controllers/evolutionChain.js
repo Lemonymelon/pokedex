@@ -1,6 +1,6 @@
-import { getPokemonEvolutionChainData } from "../api.js";
+import { fetchPokemonEvolutionChainData } from "../api.js";
 
-const formatPokemonEvolutionChain = (pokemonEvolutionChainData) => {
+export const formatPokemonEvolutionChain = (pokemonEvolutionChainData) => {
     const formattedPokemonEvolutionChain = {};
 
     const { species: { name }, evolves_to } = pokemonEvolutionChainData;
@@ -21,7 +21,7 @@ const formatPokemonEvolutionChain = (pokemonEvolutionChainData) => {
 export const getPokemonEvolutionChainByPokemonId = (req, res, next) => {
     const { pokemonId } = req.params;
 
-    getPokemonEvolutionChainData(pokemonId)
+    fetchPokemonEvolutionChainData(pokemonId)
         .then((pokemonEvolutionChainData) => {
             if (!pokemonEvolutionChainData) {
                 return Promise.reject({
@@ -30,9 +30,9 @@ export const getPokemonEvolutionChainByPokemonId = (req, res, next) => {
                 });
             }
 
-            res.status(200).send({
-                pokemonEvolutionChainData: formatPokemonEvolutionChain(pokemonEvolutionChainData)
-            });
+            res.status(200).send(
+                formatPokemonEvolutionChain(pokemonEvolutionChainData)
+            );
         })
         .catch(next);
 };
