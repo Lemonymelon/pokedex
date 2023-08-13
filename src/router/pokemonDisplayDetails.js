@@ -4,6 +4,6 @@ import { getPokemonDisplayDetailsById } from "../controllers/pokemonDisplayDetai
 
 const pokemonRouter = Router();
 
-pokemonRouter.route('/id/:id').get(getPokemonDisplayDetailsById);
+pokemonRouter.route('/displayDetails/:id').get(getPokemonDisplayDetailsById);
 
 export default pokemonRouter;
