@@ -1,4 +1,4 @@
-import { fetchPokemonDisplayDetailsById } from "../api.js";
+import { fetchPokemonDisplayDetailsById, fetchPokemon } from "../api.js";
 
 export const getPokemonDisplayDetailsById = (req, res, next) => {
     const { id } = req.params;
@@ -13,6 +13,21 @@ export const getPokemonDisplayDetailsById = (req, res, next) => {
             }
 
             res.status(200).send(pokemonDisplayData);
+        })
+        .catch(next);
+};
+
+export const getPokemon = (req, res, next) => {
+    fetchPokemon()
+        .then((pokemonData) => {
+            if (!pokemonData) {
+                return Promise.reject({
+                    status: 404,
+                    message: 'No pokemon data found!'
+                });
+            }
+
+            res.status(200).send(pokemonData);
         })
         .catch(next);
 };

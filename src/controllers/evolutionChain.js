@@ -1,5 +1,6 @@
 import { fetchPokemonEvolutionChainData } from "../api.js";
 import { parseStringToBoolean } from "../utils/bool.js";
+import { extractIdFromUrl } from "../utils/extractIdFromUrl.js";
 
 export const formatPokemonEvolutionChain = (pokemonEvolutionChainData, includeId = false) => {
     const formattedPokemonEvolutionChain = {};
@@ -9,7 +10,7 @@ export const formatPokemonEvolutionChain = (pokemonEvolutionChainData, includeId
     formattedPokemonEvolutionChain.name = name;
 
     if (parseStringToBoolean(includeId)) {
-        const pokemonId = url.match(/\/(\d+)\/$/)[1];
+        const pokemonId = extractIdFromUrl(url);
         formattedPokemonEvolutionChain.id = pokemonId;
     }
 
