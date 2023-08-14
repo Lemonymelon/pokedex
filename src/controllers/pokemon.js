@@ -18,7 +18,9 @@ export const getPokemonDisplayDetailsById = (req, res, next) => {
 };
 
 export const getPokemon = (req, res, next) => {
-    fetchPokemon()
+    const { limit, offset } = req.query;
+
+    fetchPokemon(limit, offset)
         .then((pokemonData) => {
             if (!pokemonData) {
                 return Promise.reject({
