@@ -1,14 +1,21 @@
 import { fetchPokemonEvolutionChainData } from "../api.js";
+import { parseStringToBoolean } from "../utils/bool.js";
+import { extractIdFromUrl } from "../utils/extractIdFromUrl.js";
 
-export const formatPokemonEvolutionChain = (pokemonEvolutionChainData) => {
+export const formatPokemonEvolutionChain = (pokemonEvolutionChainData, includeId = false) => {
     const formattedPokemonEvolutionChain = {};
 
-    const { species: { name }, evolves_to } = pokemonEvolutionChainData;
+    const { species: { name, url }, evolves_to } = pokemonEvolutionChainData;
 
     formattedPokemonEvolutionChain.name = name;
 
+    if (parseStringToBoolean(includeId)) {
+        const pokemonId = extractIdFromUrl(url);
+        formattedPokemonEvolutionChain.id = pokemonId;
+    }
+
     if (evolves_to.length > 0) {
-        formattedPokemonEvolutionChain.variations = evolves_to.map((variation) => formatPokemonEvolutionChain(variation));
+        formattedPokemonEvolutionChain.variations = evolves_to.map((variation) => formatPokemonEvolutionChain(variation, includeId));
     } else {
         formattedPokemonEvolutionChain.variations = evolves_to;
 
@@ -20,6 +27,7 @@ export const formatPokemonEvolutionChain = (pokemonEvolutionChainData) => {
 
 export const getPokemonEvolutionChainByPokemonId = (req, res, next) => {
     const { pokemonId } = req.params;
+    const { includeId } = req.query;
 
     fetchPokemonEvolutionChainData(pokemonId)
         .then((pokemonEvolutionChainData) => {
@@ -31,7 +39,7 @@ export const getPokemonEvolutionChainByPokemonId = (req, res, next) => {
             }
 
             res.status(200).send(
-                formatPokemonEvolutionChain(pokemonEvolutionChainData)
+                formatPokemonEvolutionChain(pokemonEvolutionChainData, includeId)
             );
         })
         .catch(next);
