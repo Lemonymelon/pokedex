@@ -46,6 +46,36 @@ example output:
     ]
 }
 ```
+**Optional query:** _includeId_ (boolean)
+
+Includes the id for each Pokemon in the evolution tree
+
+example input:
+
+```
+http://localhost:9090/api/evolutionChain/pokemonId/1?includeId=true
+```
+example output:
+
+```
+{
+    "name": "bulbasaur",
+    "id": "1",
+    "variations": [
+        {
+            "name": "ivysaur",
+            "id": "2",
+            "variations": [
+                {
+                    "name": "venusaur",
+                    "id": "3",
+                    "variations": []
+                }
+            ]
+        }
+    ]
+}
+```
 
 ### `/pokemon/displayDetails/:pokemonId`
 

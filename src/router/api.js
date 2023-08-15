@@ -1,6 +1,6 @@
 import { Router } from "express";
 import evolutionChainRouter from "./evolutionChain.js";
-import pokemonRouter from "./pokemonDisplayDetails.js";
+import pokemonRouter from "./pokemon.js";
 
 const apiRouter = Router();
 
