@@ -1,8 +1,9 @@
-import { fetchPokemonEvolutionChainData } from "../api.js";
+import { fetchPokemonEvolutionChainData, fetchPokemonDisplayDetailsById } from "../api.js";
 import { parseStringToBoolean } from "../utils/bool.js";
 import { extractIdFromUrl } from "../utils/extractIdFromUrl.js";
 
-export const formatPokemonEvolutionChain = (pokemonEvolutionChainData, includeId = false) => {
+export const formatPokemonEvolutionChain = async (pokemonEvolutionChainData, includeId = false, includeSprite = false) => {
+
     const formattedPokemonEvolutionChain = {};
 
     const { species: { name, url }, evolves_to } = pokemonEvolutionChainData;
@@ -12,25 +13,35 @@ export const formatPokemonEvolutionChain = (pokemonEvolutionChainData, includeId
     if (parseStringToBoolean(includeId)) {
         const pokemonId = extractIdFromUrl(url);
         formattedPokemonEvolutionChain.id = pokemonId;
+
+        if (parseStringToBoolean(includeSprite)) {
+            const { sprite } = await fetchPokemonDisplayDetailsById(pokemonId);
+
+            formattedPokemonEvolutionChain.sprite = sprite;
+        }
     }
 
     if (evolves_to.length > 0) {
-        formattedPokemonEvolutionChain.variations = evolves_to.map((variation) => formatPokemonEvolutionChain(variation, includeId));
+        formattedPokemonEvolutionChain.variations = await Promise.all(
+            evolves_to.map(async (variation) => {
+                const formattedPokemonEvolutionChain = await formatPokemonEvolutionChain(variation, includeId, includeSprite);
+
+                return formattedPokemonEvolutionChain;
+            })
+        );
     } else {
         formattedPokemonEvolutionChain.variations = evolves_to;
-
-        return formattedPokemonEvolutionChain;
     }
 
     return formattedPokemonEvolutionChain;
 };
 
-export const getPokemonEvolutionChainByPokemonId = (req, res, next) => {
+export const getPokemonEvolutionChainByPokemonId = async (req, res, next) => {
     const { pokemonId } = req.params;
-    const { includeId } = req.query;
+    const { includeId, includeSprite } = req.query;
 
     fetchPokemonEvolutionChainData(pokemonId)
-        .then((pokemonEvolutionChainData) => {
+        .then(async (pokemonEvolutionChainData) => {
             if (!pokemonEvolutionChainData) {
                 return Promise.reject({
                     status: 404,
@@ -38,9 +49,9 @@ export const getPokemonEvolutionChainByPokemonId = (req, res, next) => {
                 });
             }
 
-            res.status(200).send(
-                formatPokemonEvolutionChain(pokemonEvolutionChainData, includeId)
-            );
+            const formattedPokemonEvolutionChain = await formatPokemonEvolutionChain(pokemonEvolutionChainData, includeId, includeSprite);
+
+            res.status(200).send(formattedPokemonEvolutionChain);
         })
         .catch(next);
 };
